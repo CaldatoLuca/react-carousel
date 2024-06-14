@@ -15,7 +15,6 @@ const Carousel = () => {
         "Un meraviglioso tramonto sul mare, con colori vividi e riflessi sull'acqua.",
       image: sunset,
       author: "Luca Rossi",
-      profileImage: "https://via.placeholder.com/40x40",
     },
     {
       title: "Montagne innevate",
@@ -23,7 +22,6 @@ const Carousel = () => {
         "Le vette innevate delle Alpi in una giornata di sole limpido.",
       image: mountain,
       author: "Giulia Bianchi",
-      profileImage: "https://via.placeholder.com/40x40",
     },
     {
       title: "Foresta Autunnale",
@@ -80,7 +78,6 @@ const Carousel = () => {
         content={posts[currentPost].description}
         image={posts[currentPost].image}
         author={posts[currentPost].author}
-        authorImg={posts[currentPost].profileImage}
       ></Card>
 
       <button onClick={nextPost}>
@@ -90,6 +87,7 @@ const Carousel = () => {
       <div className=" w-full justify-center flex gap-5">
         {posts.map((p, i) => (
           <button
+            key={`btn-${i}`}
             className={`w-2 h-2 rounded-full ${
               currentPost === i ? "bg-orange-500" : "bg-stone-300"
             }`}

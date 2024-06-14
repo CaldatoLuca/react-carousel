@@ -1,4 +1,4 @@
-const Card = ({ title, content, image, author, authorImg }) => {
+const Card = ({ title, content, image, author }) => {
   return (
     <div className="flex flex-col  bg-stone-700  w-2/5 rounded-2xl">
       <figure className="relative ">
