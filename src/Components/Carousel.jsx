@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Card from "./Card";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import {
+  TbPlayerSkipBackFilled,
+  TbPlayerRecordFilled,
+  TbPlayerSkipForwardFilled,
+} from "react-icons/tb";
 import city from "../assets/city.jpeg";
 import field from "../assets/field.jpeg";
 import forest from "../assets/forest.jpg";
@@ -50,26 +55,67 @@ const Carousel = () => {
   ];
 
   const [currentPost, setCurrentPost] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
+  const [activePlay, setActivePlay] = useState(null);
 
   const nextPost = () => {
-    if (currentPost === posts.length - 1) {
-      setCurrentPost(0);
-    } else {
-      setCurrentPost(currentPost + 1);
-    }
+    setCurrentPost((prevPost) =>
+      prevPost === posts.length - 1 ? 0 : prevPost + 1
+    );
   };
 
-  const previusPost = () => {
-    if (currentPost === 0) {
-      setCurrentPost(posts.length - 1);
-    } else {
-      setCurrentPost(currentPost - 1);
+  const previousPost = () => {
+    setCurrentPost((prevPost) =>
+      prevPost === 0 ? posts.length - 1 : prevPost - 1
+    );
+  };
+
+  const startAutoNext = () => {
+    stopAuto();
+    const id = setInterval(nextPost, 1000);
+    setIntervalId(id);
+    setActivePlay(3);
+  };
+
+  const startAutoPrev = () => {
+    stopAuto();
+    const id = setInterval(previousPost, 1000);
+    setIntervalId(id);
+    setActivePlay(1);
+  };
+
+  const stopAuto = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setActivePlay(2);
     }
   };
 
   return (
     <div className="flex items-center justify-center gap-10 w-full flex-wrap">
-      <button onClick={previusPost}>
+      <div className="w-full justify-center flex gap-5 text-lg">
+        <button
+          onClick={startAutoPrev}
+          className={activePlay === 1 ? "text-orange-500" : "text-stone-300"}
+        >
+          <TbPlayerSkipBackFilled />
+        </button>
+        <button
+          onClick={stopAuto}
+          className={activePlay === 2 ? "text-orange-500" : "text-stone-300"}
+        >
+          <TbPlayerRecordFilled />
+        </button>
+        <button
+          onClick={startAutoNext}
+          className={activePlay === 3 ? "text-orange-500" : "text-stone-300"}
+        >
+          <TbPlayerSkipForwardFilled />
+        </button>
+      </div>
+
+      <button onClick={previousPost}>
         <FaArrowAltCircleLeft className="text-3xl text-orange-500 " />
       </button>
 
@@ -78,13 +124,13 @@ const Carousel = () => {
         content={posts[currentPost].description}
         image={posts[currentPost].image}
         author={posts[currentPost].author}
-      ></Card>
+      />
 
       <button onClick={nextPost}>
         <FaArrowAltCircleRight className="text-3xl text-orange-500" />
       </button>
 
-      <div className=" w-full justify-center flex gap-5">
+      <div className="w-full justify-center flex gap-5">
         {posts.map((p, i) => (
           <button
             key={`btn-${i}`}
@@ -92,7 +138,7 @@ const Carousel = () => {
               currentPost === i ? "bg-orange-500" : "bg-stone-300"
             }`}
             onClick={() => setCurrentPost(i)}
-          ></button>
+          />
         ))}
       </div>
     </div>

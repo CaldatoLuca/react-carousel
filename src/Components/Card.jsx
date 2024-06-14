@@ -1,6 +1,6 @@
 const Card = ({ title, content, image, author }) => {
   return (
-    <div className="flex flex-col  bg-stone-700  w-2/5 rounded-2xl">
+    <div className="flex flex-col  bg-stone-700  w-2/5 rounded-2xl shadow-lg shadow-stone-800 p-1">
       <figure className="relative ">
         <img
           src={image}
