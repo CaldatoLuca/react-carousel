@@ -70,7 +70,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="flex items-center justify-center gap-10 w-full">
+    <div className="flex items-center justify-center gap-10 w-full flex-wrap">
       <button onClick={previusPost}>
         <FaArrowAltCircleLeft className="text-3xl text-orange-500 " />
       </button>
@@ -86,6 +86,17 @@ const Carousel = () => {
       <button onClick={nextPost}>
         <FaArrowAltCircleRight className="text-3xl text-orange-500" />
       </button>
+
+      <div className=" w-full justify-center flex gap-5">
+        {posts.map((p, i) => (
+          <button
+            className={`w-2 h-2 rounded-full ${
+              currentPost === i ? "bg-orange-500" : "bg-stone-300"
+            }`}
+            onClick={() => setCurrentPost(i)}
+          ></button>
+        ))}
+      </div>
     </div>
   );
 };
