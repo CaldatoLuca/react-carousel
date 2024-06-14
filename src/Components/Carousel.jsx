@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Card from "./Card";
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
+import city from "../assets/city.jpeg";
+import field from "../assets/field.jpeg";
+import forest from "../assets/forest.jpg";
+import mountain from "../assets/mountain.jpeg";
+import sunset from "../assets/sunset.jpeg";
 
 const Carousel = () => {
   const posts = [
@@ -8,7 +13,7 @@ const Carousel = () => {
       title: "Tramonto sul Mare",
       description:
         "Un meraviglioso tramonto sul mare, con colori vividi e riflessi sull'acqua.",
-      image: "https://via.placeholder.com/600x300",
+      image: sunset,
       author: "Luca Rossi",
       profileImage: "https://via.placeholder.com/40x40",
     },
@@ -16,7 +21,7 @@ const Carousel = () => {
       title: "Montagne innevate",
       description:
         "Le vette innevate delle Alpi in una giornata di sole limpido.",
-      image: "https://via.placeholder.com/600x300",
+      image: mountain,
       author: "Giulia Bianchi",
       profileImage: "https://via.placeholder.com/40x40",
     },
@@ -24,7 +29,7 @@ const Carousel = () => {
       title: "Foresta Autunnale",
       description:
         "Un sentiero che attraversa una foresta autunnale con foglie colorate.",
-      image: "https://via.placeholder.com/600x300",
+      image: forest,
       author: "Marco Verdi",
       profileImage: "https://via.placeholder.com/40x40",
     },
@@ -32,7 +37,7 @@ const Carousel = () => {
       title: "Città di Notte",
       description:
         "Lo skyline di una grande città illuminata dalle luci notturne.",
-      image: "https://via.placeholder.com/600x300",
+      image: city,
       author: "Elena Neri",
       profileImage: "https://via.placeholder.com/40x40",
     },
@@ -40,7 +45,7 @@ const Carousel = () => {
       title: "Campo di Lavanda",
       description:
         "Un vasto campo di lavanda in fiore, con un cielo azzurro sullo sfondo.",
-      image: "https://via.placeholder.com/600x300",
+      image: field,
       author: "Roberto Russo",
       profileImage: "https://via.placeholder.com/40x40",
     },
@@ -48,9 +53,25 @@ const Carousel = () => {
 
   const [currentPost, setCurrentPost] = useState(0);
 
+  const nextPost = () => {
+    if (currentPost === posts.length - 1) {
+      setCurrentPost(0);
+    } else {
+      setCurrentPost(currentPost + 1);
+    }
+  };
+
+  const previusPost = () => {
+    if (currentPost === 0) {
+      setCurrentPost(posts.length - 1);
+    } else {
+      setCurrentPost(currentPost - 1);
+    }
+  };
+
   return (
-    <div className="flex items-center gap-10">
-      <button>
+    <div className="flex items-center justify-center gap-10 w-full">
+      <button onClick={previusPost}>
         <FaArrowAltCircleLeft className="text-3xl text-orange-500 " />
       </button>
 
@@ -62,7 +83,7 @@ const Carousel = () => {
         authorImg={posts[currentPost].profileImage}
       ></Card>
 
-      <button>
+      <button onClick={nextPost}>
         <FaArrowAltCircleRight className="text-3xl text-orange-500" />
       </button>
     </div>
